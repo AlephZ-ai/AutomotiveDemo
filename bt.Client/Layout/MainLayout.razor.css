@@ -13,7 +13,31 @@ main {
     height: 100vh;
     position: sticky;
     top: 0;
-    transition: width 0.3s;
+    transition: width 0.2s;
+    width: 250px;
+}
+
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed .nav-item ::deep .nav-link {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+}
+
+.sidebar.collapsed .nav-item ::deep .nav-link span {
+    display: none;
+}
+
+.sidebar.collapsed .nav-item ::deep .nav-link .bi {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
 }
 
 .top-row {
@@ -42,6 +66,10 @@ main {
     text-overflow: ellipsis;
 }
 
+.navbar-toggler {
+    display: block;
+}
+
 @media (max-width: 640.98px) {
     .sidebar {
         width: 70px;
@@ -67,30 +95,6 @@ main {
     }
 }
 
-@media (min-width: 641px) {
-    .sidebar {
-        width: 250px;
-    }
-
-    .top-row {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-
-    .top-row.auth ::deep a:first-child {
-        flex: 1;
-        text-align: right;
-        width: 0;
-    }
-
-    .top-row,
-    article {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
-    }
-}
-
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -103,9 +107,9 @@ main {
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-}
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }

@@ -4,39 +4,53 @@
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
+        @if (!SidebarCollapsed)
+        {
         <a class="navbar-brand" href="">bt</a>
+        }
     </div>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
+<div class="sidebar">
+    <input type="checkbox" id="navbar-toggler" class="navbar-toggler" checked="@SidebarCollapsed" @onchange="OnSidebarCollapsedChanged" />
+    <nav class="flex-column nav-scrollable">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>
-                <span class="nav-link-text">Home</span>
+                @if (!SidebarCollapsed)
+                {
+                    <span class="nav-link-text">Home</span>
+                }
             </NavLink>
         </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="counter">
                 <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span>
-                <span class="nav-link-text">Counter</span>
+                @if (!SidebarCollapsed)
+                {
+                    <span class="nav-link-text">Counter</span>
+                }
             </NavLink>
         </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="weather">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span>
-                <span class="nav-link-text">Weather</span>
+                @if (!SidebarCollapsed)
+                {
+                    <span class="nav-link-text">Weather</span>
+                }
             </NavLink>
         </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="auth">
-                <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> 
-                <span class="nav-link-text">Auth Required</span>
+                <span class="bi bi-lock-nav-menu" aria-hidden="true"></span>
+                @if (!SidebarCollapsed)
+                {
+                    <span class="nav-link-text">Auth Required</span>
+                }
             </NavLink>
         </div>
 
@@ -61,13 +75,19 @@
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Register">
                         <span class="bi bi-person-nav-menu" aria-hidden="true"></span>
-                        <span class="nav-link-text">Register</span>
+                        @if (!SidebarCollapsed)
+                        {
+                            <span class="nav-link-text">Register</span>
+                        }
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Login">
                         <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span>
-                        <span class="nav-link-text">Login</span>
+                        @if (!SidebarCollapsed)
+                        {
+                            <span class="nav-link-text">Login</span>
+                        }
                     </NavLink>
                 </div>
             </NotAuthorized>
@@ -94,5 +114,16 @@
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
-}
 
+    [Parameter]
+    public bool SidebarCollapsed { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> SidebarCollapsedChanged { get; set; }
+
+    private async Task OnSidebarCollapsedChanged(ChangeEventArgs e)
+    {
+        SidebarCollapsed = (bool)e.Value!;
+        await SidebarCollapsedChanged.InvokeAsync(SidebarCollapsed);
+    }
+}
